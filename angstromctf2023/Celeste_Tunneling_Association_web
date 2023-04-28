@@ -6,11 +6,13 @@ Web Page
 "Welcome to the _tunnel_. Watch your step!!"
 
 Source Code (server.py)
-<img width="422" alt="image" src="https://user-images.githubusercontent.com/27437815/235211420-8e80b00d-4ace-48a4-9b18-fd2fd8edba60.png">
+
+ <img width="422" alt="image" src="https://user-images.githubusercontent.com/27437815/235211420-8e80b00d-4ace-48a4-9b18-fd2fd8edba60.png">
 
 We notice that we can get flag if we connect to the host correctly we can get the flag page back. 
 so if we run a request.get with "host : <SECRET_SITE>" to the webpage url and print the body we will get the flag back.
 
 The SECRE_SITE is noted in line 4 as "flag.local"
+
 ![image](https://user-images.githubusercontent.com/27437815/235214647-626c6f12-b8c9-410e-b40c-a99e5c475067.png)
 
