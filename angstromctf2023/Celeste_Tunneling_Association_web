@@ -6,13 +6,49 @@ Web Page
 "Welcome to the _tunnel_. Watch your step!!"
 
 Source Code (server.py)
+          # run via `uvicorn app:app --port 6000`
+          import os
 
- <img width="422" alt="image" src="https://user-images.githubusercontent.com/27437815/235211420-8e80b00d-4ace-48a4-9b18-fd2fd8edba60.png">
+          SECRET_SITE = b"flag.local"
+          FLAG = os.environ['FLAG']
+
+          async def app(scope, receive, send):
+              assert scope['type'] == 'http'
+
+              headers = scope['headers']
+
+              await send({
+                  'type': 'http.response.start',
+                  'status': 200,
+                  'headers': [
+                      [b'content-type', b'text/plain'],
+                  ],
+              })
+
+              # IDK malformed requests or something
+              num_hosts = 0
+              for name, value in headers:
+                  if name == b"host":
+                      num_hosts += 1
+
+              if num_hosts == 1:
+                  for name, value in headers:
+                      if name == b"host" and value == SECRET_SITE:
+                          await send({
+                              'type': 'http.response.body',
+                              'body': FLAG.encode(),
+                          })
+                          return
+
+              await send({
+                  'type': 'http.response.body',
+                  'body': b'Welcome to the _tunnel_. Watch your step!!',
+              })
+
 
 We notice that we can get flag if we connect to the host correctly we can get the flag page back. 
 so if we run a request.get with "host : <SECRET_SITE>" to the webpage url and print the body we will get the flag back.
-
 The SECRE_SITE is noted in line 4 as "flag.local"
 
-![image](https://user-images.githubusercontent.com/27437815/235214647-626c6f12-b8c9-410e-b40c-a99e5c475067.png)
+actf{reaching_the_core__chapter_8}
 
